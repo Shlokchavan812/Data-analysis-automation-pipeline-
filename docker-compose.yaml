@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  airflow-standalone:
+    image: apache/airflow:2.9.2-python3.11
+    container_name: airflow_data_pipeline
+    restart: always
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=False
+      - AIRFLOW__CORE__DEFAULT_TIMEZONE=Asia/Kolkata
+      - AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE=Asia/Kolkata
+      - _PIP_ADDITIONAL_REQUIREMENTS=pandas numpy pendulum
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - .:/opt/airflow/project
+    ports:
+      - "8080:8080"
+    command: standalone
+
